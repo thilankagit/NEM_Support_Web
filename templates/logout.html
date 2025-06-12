@@ -1,0 +1,4 @@
+<!-- Add a logout link at the top of the page if logged in -->
+{% if session.get('logged_in') %}
+    <a href="{{ url_for('logout') }}">Logout</a>
+{% endif %}

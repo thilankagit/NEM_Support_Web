@@ -1,0 +1,260 @@
+body {
+    background-image: url('/static/images/image.jpg');
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-repeat: repeat; /* Prevents the image from repeating */
+    background-position: center; /* Centers the image on the page */
+    font-family: Arial, sans-serif; /* Sets a clean font for the page */
+    margin: 0;
+    margin-bottom: 10px; 
+    min-height: 100%;/* Adjust as needed to create space for footer */
+    padding: 0;
+    color: #333; /* Default text color */
+    height: 100vh;
+    position: relative; /* For overlay positioning */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Overlay to improve text readability */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 10;
+    width: 100%;
+    height: 100%;
+    min-height: 100%; 
+    background-color: rgba(255, 255, 255, 0.7); /*Semi-transparent white overlay */
+    z-index: -1;
+}
+
+
+
+h1, h2 {
+    text-align: center;
+    color: #333; /* Dark text for better contrast */
+    margin-top: 20px;
+}
+h1 {
+    text-align: center;
+    margin-top: 50px; /* Push header down slightly */
+    position: relative;
+    font-size: 28px; /* Adjust size */
+    font-weight: bold;
+    padding-bottom: 10px; /* Space below text */
+}
+
+h1::after {
+    content: "";
+    display: block;
+    width: 150px; /* Adjust line width */
+    height: 4px; /* Adjust thickness */
+    background: linear-gradient(to right, #0241ee, #00d4ff); /* Gradient color */
+    margin: 10px auto 0; /* Center the line */
+    border-radius: 5px; /* Rounded edges */
+}
+
+form {
+    text-align: center;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Spacing between form elements */
+}
+
+form label {
+    font-weight: bold;
+    color: #333;
+}
+
+form input[type="text"] {
+    padding: 8px;
+    width: 250px; /* Increased width for better visibility */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    text-align: center; /* Center the input text */
+}
+
+form button {
+    padding: 8px 16px;
+    background-color: #007bff; /* Blue button */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 250px; /* Make button same width as inputs */
+}
+
+form button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff; /* Background for the table */
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    text-align: center; /* Centers content horizontally */
+    vertical-align: middle; /* Centers content vertically */
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+td {
+    padding: 10px;
+}
+th {
+    position: relative;
+    background-color: #007bff; /* Blue header */
+    color: #fff;
+    padding: 10px;
+}
+/* Add filter input styling to the table headers */
+th input {
+    width: 80%;
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+}
+
+th:hover {
+    background-color: #0056b3;
+}
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Alternate row color */
+}
+
+tr:hover {
+    background-color: #f1f1f1; /* Hover effect */
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+li {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    form input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    form button {
+        width: 100%;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    ul {
+        width: 90%;
+    }
+}
+/* Style the form inputs to make them the same size */
+form input[type="text"],
+form input[type="password"] {
+    padding: 8px;
+    width: 250px; /* Set the width to be the same for both input fields */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 10px 0;  /* Add margin for spacing between inputs */
+    text-align: center; /* Center the input text */
+}
+
+form button {
+    padding: 8px 16px;
+    background-color: #007bff; /* Blue button */
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 250px; /* Make button same width as inputs */
+}
+
+form button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Error message styling */
+.error-message {
+    color: red; /* Red text color */
+    font-weight: bold; /* Bold text */
+    text-align: center; /* Center the text */
+    margin-top: 20px; /* Optional: Add some spacing above */
+    font-size: 18px; /* Adjust the font size if necessary */
+}
+footer {
+    text-align: center;
+    margin-top: 10px;
+    padding: 10px;
+    background: #f1f1f1;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+.content {
+    flex-grow: 1; /* This ensures content grows to fill the available space */
+    padding-bottom: 60px; /* Space for the footer */
+}
+.logout-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 8px 16px;
+    background-color: #f44336; /* Red color */
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect */
+.logout-btn:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .logout-btn {
+        font-size: 14px;
+        padding: 6px 12px;
+        top: 5px;
+        right: 5px;
+    }
+}

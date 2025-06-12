@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Care Portal</title>
+    <style>
+        /* Style for the logout button */
+        .logout-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #d32f2f;
+            transform: scale(1.05);
+        }
+
+        /* Ensure header is not overlapped */
+        h1 {
+            text-align: center;
+            margin-top: 50px; /* Push header down slightly */
+        }
+
+        /* Make sure content is not covered by logout button */
+        .content {
+            margin-top: 20px;
+            padding: 20px;
+            max-height: calc(100vh - 150px); /* Adjusts to viewport height minus header/footer */
+            overflow-y: auto; /* Enables scrolling */
+            position: relative;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            margin-top: 10px;
+            padding: 5px;
+            background: #0241ee;
+            color: white;
+            font-weight: bold;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 10px;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let mainInputs = document.querySelectorAll(".main-search-input"); // Main search inputs (AM, Company, Ref Number)
+
+            // Initialize by disabling all other inputs if any input already has a value
+            disableOtherMainInputs();
+
+            // Attach event listener to each main input to disable other main inputs when typing
+            mainInputs.forEach(input => {
+                input.addEventListener("input", function() {
+                    hideOtherMainInputs(input); // Hide other inputs when text is entered in the current input
+                });
+            });
+
+            // Function to hide other main inputs based on the input entered
+            function hideOtherMainInputs(activeInput) {
+                mainInputs.forEach(input => {
+                    if (input !== activeInput) {
+                        input.disabled = activeInput.value.length > 0; // Disable other inputs if current has text
+                    }
+                });
+            }
+
+            // Initialize function to disable other inputs if any input has a value on page load
+            function disableOtherMainInputs() {
+                mainInputs.forEach(input => {
+                    if (input.value.length > 0) {
+                        input.disabled = true; // Disable if already has text
+                    }
+                });
+            }
+        });
+
+        // Function to filter the table based on inputs
+        function filterTable() {
+            var table = document.getElementById("dataTable");
+            var rows = table.getElementsByTagName("tr");
+            var inputs = document.querySelectorAll(".filter-input"); // Only the table filter inputs
+
+            // Loop through each table row (excluding the header)
+            for (var i = 1; i < rows.length; i++) {
+                var row = rows[i];
+                var showRow = true;
+
+                // Loop through each filter input and check the corresponding column
+                inputs.forEach((input, index) => {
+                    var filter = input.value.toUpperCase(); // Get filter value
+                    var cell = row.getElementsByTagName("td")[index]; // Get the corresponding cell in the row
+                    
+                    if (cell) {
+                        var cellText = cell.textContent || cell.innerText;
+
+                        // If the cell text doesn't match the filter, hide the row
+                        if (cellText.toUpperCase().indexOf(filter) === -1) {
+                            showRow = false;
+                        }
+                    }
+                });
+
+                // Show or hide row based on the result of the filters
+                row.style.display = showRow ? "" : "none";
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Logout Button (Top Right) -->
+    <div class="logout-container">
+        <form action="{{ url_for('logout') }}" method="get">
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+
+    <!-- Page Header -->
+    <h1>Customer Care Portal</h1>
+
+    <div class="content">
+        <form method="POST">
+            <label for="am_complained_by">AM / Complained By:</label>
+            <input type="text" name="am_complained_by" id="am_complained_by" class="main-search-input" placeholder="Search by AM / Complained By">
+            <label for="company_name">Company Name:</label>
+            <input type="text" name="company_name" id="company_name" class="main-search-input" placeholder="Search by Company Name">
+            <label for="ref_number">Reference Number:</label>
+            <input type="text" name="ref_number" id="ref_number" class="main-search-input" placeholder="Search by Reference Number">
+            <button type="submit">Search</button>
+        </form>
+
+        {% if data is not none and not data.empty %}
+            <h2>Filtered Results</h2>
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        {% for col in columns %}
+                            <th>
+                                <input type="text" class="filter-input" data-col="{{ loop.index0 }}" onkeyup="filterTable()" placeholder="Filter {{ col }}">
+                                {{ 'Status' if col == 'Sub Status' else col }}
+                            </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data.itertuples(index=False) %}
+                        <tr>
+                            {% for cell in row %}
+                                <td>{{ cell }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% elif data is not none %}
+            <p class="error-message">No results found for the given search criteria.</p>
+        {% endif %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025. All Rights Reserved. Designed & Developed by SANT.</p>
+    </footer>
+</body>
+</html>
+
+

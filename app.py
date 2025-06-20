@@ -10,6 +10,7 @@ app.permanent_session_lifetime = timedelta(minutes=10)  # Updated auto logout ti
 try:
     data = pd.read_excel('data.xlsx')
     #data = pd.read_excel('data_without_closed.xlsx')
+    data = data[~data['Status'].str.contains('CLOSED', case=False, na=False)]
 except Exception as e:
     data = pd.DataFrame()
     print(f"Error loading Excel file: {e}")
